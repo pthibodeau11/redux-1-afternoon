@@ -1,15 +1,22 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import RecipeCard from "./../RecipeCard/RecipeCard";
+import store, { CLEAR_FIELDS } from "./../../store";
 import "./Home.css";
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipes: []
+      recipes: store.getState().recipes
     };
   }
+
+  clearfields = () => {
+    store.dispatch({
+      type: CLEAR_FIELDS
+    });
+  };
 
   render() {
     const recipes = this.state.recipes.map((recipe, i) => {
@@ -28,7 +35,7 @@ class Home extends Component {
     return (
       <div className="Home">
         <Link to="/add/name">
-          <button>Create New Recipe</button>
+          <button onClick={this.clearfields}>Create New Recipe</button>
         </Link>
         <div className="card_container">{recipes}</div>
       </div>
